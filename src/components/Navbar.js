@@ -1,13 +1,15 @@
-import React from 'react'
+import React, {useState, useContext} from 'react'
+import {AuthContext} from '../contexts/AuthContext.js'
 import {Link} from 'react-router-dom'
 import {auth} from '../firebase/firebase.js'
 import {useHistory} from 'react-router-dom'
 
-
 export default function Navbar({user}) {
+    const {dispatch} = useContext(AuthContext)
     const history = useHistory()
     const logOut = () => {
-        auth.signOut()
+        dispatch({type: 'REMOVE_USER', user: {}})            
+        auth.signOut()        
         history.push('/login')
     }
     return (

@@ -6,7 +6,8 @@ import Login from './components/Login.js'
 import SignUp from './components/Signup.js'
 import React, {useState, useEffect} from 'react'
 import {auth} from './firebase/firebase.js'
-
+import AuthContextProvider from './contexts/AuthContext.js'
+import Random from './components/Random.js'
 
 function App() {
   const [user, setUser] = useState('')
@@ -24,6 +25,7 @@ function App() {
 
 
   return (
+    <AuthContextProvider>
     <BrowserRouter>
       <Navbar user={user}/>
       <Switch>
@@ -31,13 +33,18 @@ function App() {
             <Todo user={user}/>
         </Route>
         <Route path='/login'>
-            <Login />
+            <Login user={user}/>
         </Route>
         <Route path='/signup'>
-            <SignUp/>
+            <SignUp user={user}/>
         </Route>
+        <Route path='/page-404'>
+            <Random/>
+        </Route>
+ 
       </Switch>
     </BrowserRouter>
+    </AuthContextProvider>
   );
 }
 
